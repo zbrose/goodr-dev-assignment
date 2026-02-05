@@ -1,10 +1,12 @@
 class GoodrPopup {
   constructor(container) {
     this.container = container;
-    this.overlay = container.querySelector(".modal-overlay");
-    this.closeBtn = container.querySelector(".close-modal-btn");
-    this.dismissBtn = container.querySelector(".dismiss-modal-btn");
-    this.confirmBtn = container.querySelector(".confirm-modal-btn");
+    // Updated Selectors to match BEM naming
+    this.overlay = container.querySelector(".goodr-modal__overlay");
+    this.closeBtn = container.querySelector(".goodr-modal__close-btn");
+    this.dismissBtn = container.querySelector(".goodr-modal__dismiss-btn");
+    this.confirmBtn = container.querySelector(".goodr-modal__confirm-btn");
+
     this.storageKey = `goodr_popup_seen_${container.dataset.sectionId}`;
     this.delay = parseInt(container.dataset.delay) * 1000 || 3000;
 
@@ -12,6 +14,18 @@ class GoodrPopup {
   }
 
   init() {
+    const isTestMode = this.container.classList.contains(
+      "goodr-modal--test-mode",
+    );
+    const isEditor = window.Shopify && window.Shopify.designMode;
+
+    // 1. If in the editor, show it immediately for a better experience
+    if (isEditor || isTestMode) {
+      this.show();
+      return;
+    }
+
+    // 2. Normal customer logic (Delay + Session check)
     if (sessionStorage.getItem(this.storageKey)) return;
 
     setTimeout(() => {
@@ -40,7 +54,7 @@ class GoodrPopup {
 
   show() {
     this.container.classList.add("is-active");
-    this.overlay.setAttribute("aria-hidden", "false");
+    if (this.overlay) this.overlay.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
   }
 
@@ -51,10 +65,10 @@ class GoodrPopup {
     // Wait for animation to complete before hiding
     setTimeout(() => {
       this.container.classList.remove("is-active", "is-closing");
-      this.overlay.setAttribute("aria-hidden", "true");
+      if (this.overlay) this.overlay.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
       sessionStorage.setItem(this.storageKey, "true");
-    }, 400); // Match CSS transition duration
+    }, 400); // Matches CSS transition duration
   }
 
   handleConfirm(e) {
@@ -65,7 +79,15 @@ class GoodrPopup {
   }
 }
 
+// Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.querySelector(".goodr-modal");
   if (popup) new GoodrPopup(popup);
+});
+
+// Shopify Design Mode Support (Re-init when section is added/selected in customizer)
+document.addEventListener("shopify:section:load", (event) => {
+  if (event.target.querySelector(".goodr-modal")) {
+    new GoodrPopup(event.target.querySelector(".goodr-modal"));
+  }
 });
