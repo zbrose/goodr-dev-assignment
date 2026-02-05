@@ -6,19 +6,22 @@
 
 			<button class="close-modal-btn" aria-label="Close modal">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<line x1="18" y1="6" x2="6" y2="18"></line>
-					<line x1="6" y1="6" x2="18" y2="18"></line>
+					<line x1="20" y1="6" x2="6" y2="20"></line>
+					<line x1="6" y1="6" x2="20" y2="20"></line>
 				</svg>
 			</button>
 
-      <div class="modal-hero">
+   		<div class="modal-hero">
         <h2 class="modal-title">{{ section.settings.modal_title }}</h2>
         {% if section.settings.modal_image %}
           {{ section.settings.modal_image | image_url: width: 374, height: 360 | image_tag: width: 374, height: 360, class: 'modal-img' }}
+        {% else %}
+          <img src="https://placecats.com/374/360" width="374" height="360" class="modal-img" alt="Modal Image">
         {% endif %}
+				<p>Use code <span class="discount-code">{{  section.settings.discount_code }}</span> for $5 off your first order</p>
       </div>
 
-      <p>{{ section.settings.modal_description }}</p>
+
 
 			<div class="modal-btn-group">
 
@@ -49,13 +52,12 @@
       "type": "text",
       "id": "modal_title",
       "label": "Modal Title",
-      "default": "Modal Heading"
+      "default": "goodr"
     },
     {
       "type": "textarea",
       "id": "modal_description",
       "label": "Modal Description",
-      "default": "This is a sample modal popup."
     },
     {
       "type": "text",
@@ -94,6 +96,12 @@
       "unit": "sec",
       "label": "Delay before showing",
       "default": 2
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+			"default": "GOODR5",
+			"label": "Discount Code"
     }
   ],
   "presets": [
@@ -126,18 +134,48 @@
   position: relative;
   background: #FFFFFF;
 	border: 3px solid var(--modal-navy);
-  padding: 30px;
+  padding: ;
   border-radius: 8px;
   text-align: center;
 	width: 484px;
 	height: 654px;
   box-shadow: var(--goodr-shadow);
 	padding: 52px 55px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+#Section-{{ section.id }} .modal-hero {
+	position: relative;
+	text-align: center;
+}
+
+#Section-{{ section.id }} .modal-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+	color: white;
+}
+
+#Section-{{ section.id }} .modal-description {
+	font-weight: 700;
+	font-size: 24px;
+	color: var(--modal-navy);
+	margin-top: 20px;
+}
+
+#Section-{{ section.id }} .dicount-code {
+		font-weight: 700;
+		font-size: 24px;
+		color: #E06287;
+		margin-top: 20px;
 }
 
 #Section-{{ section.id }} .modal-img {
 	width: 374px;
 	height: 360px;
+	border-radius: 4px;
 }
 
 #Section-{{ section.id }} .modal-btn-group {
