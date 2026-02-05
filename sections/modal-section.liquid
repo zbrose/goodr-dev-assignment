@@ -1,0 +1,208 @@
+<div class="custom-modal-section" id="Section-{{ section.id }}">
+  <div class="modal-overlay" 
+		style="display: flex;"
+	>
+    <div class="modal-content">
+
+			<button class="close-modal-btn">
+				{{ section.settings.close_button_text }}
+			</button>
+
+      <div class="modal-hero">
+        <h2 class="modal-title">{{ section.settings.modal_title }}</h2>
+        {% if section.settings.modal_image %}
+          {{ section.settings.modal_image | image_url: width: 374, height: 360 | image_tag: width: 374, height: 360, class: 'modal-img' }}
+        {% endif %}
+      </div>
+
+      <p>{{ section.settings.modal_description }}</p>
+
+			<a href="{{ section.settings.confirm_button_link }}">
+				<button class="confirm-modal-btn">
+					{{ section.settings.confirm_button_text }}
+				</button>
+			</a>
+
+			<button class="decline-modal-btn">
+				{{ section.settings.decline_button_text }}
+			</button>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Modal Popup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Open Modal"
+    },
+    {
+      "type": "text",
+      "id": "modal_title",
+      "label": "Modal Title",
+      "default": "Modal Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_description",
+      "label": "Modal Description",
+      "default": "This is a sample modal popup."
+    },
+    {
+      "type": "text",
+      "id": "close_button_text",
+      "label": "Close Button text",
+      "default": "X"
+    },
+    {
+      "type": "text",
+      "id": "confirm_button_text",
+      "label": "Confirm Button Text",
+      "default": "Shop All Styles"
+    },
+    {
+      "type": "text",
+      "id": "decline_button_text",
+      "label": "Confirm Button Text",
+      "default": "Nah, I Hate Deals"
+    },
+    {
+      "type": "url",
+      "id": "confirm_button_link",
+      "label": "Confirm Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "modal_image",
+      "label": "Modal Image"
+    },
+    {
+      "type": "range",
+      "id": "delay_time",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "unit": "sec",
+      "label": "Delay before showing",
+      "default": 2
+    }
+  ],
+  "presets": [
+    {
+      "name": "Modal Popup"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+#Section-{{ section.id }} {
+
+	--modal-navy: #0C2340;
+}
+
+#Section-{{ section.id }} .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); 
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; 
+}
+
+#Section-{{ section.id }} .modal-content {
+  background: #FFFFFF;
+	border: 3px solid var(--modal-navy);
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+	width: 484px;
+	height: 654px;
+  box-shadow: -4px 4px var(--modal-navy);
+	padding: 52px 55px;
+}
+
+#Section-{{ section.id }} .modal-img {
+	width: 374px;
+	height: 360px;
+}
+
+#Section-{{ section.id }} .close-modal-btn {
+  margin-top: 20px;
+  padding: 8px 16px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#Section-{{ section.id }} .confirm-modal-btn {
+  margin-top: 20px;
+  padding: 8px 16px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#Section-{{ section.id }} .decline-modal-btn {
+  margin-top: 20px;
+  padding: 8px 16px;
+  color: var(--modal-navy);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const sectionContainer = document.querySelector("#Section-{{ section.id }}");
+  const closeModalBtn = sectionContainer.querySelector(".close-modal-btn");
+  const modalOverlay = sectionContainer.querySelector(".modal-overlay");
+  
+  const storageKey = 'shopify_modal_seen_{{ section.id }}';
+	const delayInMs = {{ section.settings.delay_time | default: 2 }} * 1000;
+        
+	
+
+
+
+  {% comment %} // Function to Close
+  const closeModal = () => {
+    modalOverlay.style.display = "none";
+  };
+
+
+  if (!sessionStorage.getItem(storageKey)) {
+    
+    setTimeout(() => {
+      // Ensure the modal actually exists before trying to show it
+      if (modalOverlay) {
+        modalOverlay.style.display = "flex";
+        
+        // 2. Mark as seen for THIS session only
+        sessionStorage.setItem(storageKey, 'true');
+      }
+    }, delayInMs);
+    
+  }
+
+  // 3. Close Listeners
+  closeModalBtn.addEventListener("click", closeModal);
+  
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  }); {% endcomment %}
+});
+</script>
