@@ -1,17 +1,17 @@
 {{ 'modal-section.css' | asset_url | stylesheet_tag }}
 
-  <div class="custom-modal-section {% if section.settings.test_mode %}test-mode-active{% endif %}" 
+  <div class="gdr-modal {% if section.settings.test_mode %}gdr-modal--test-mode{% endif %}" 
      data-section-id="{{ section.id }}" 
      data-delay="{{ section.settings.delay_time }}">
-    <div class="modal-overlay" aria-hidden="true">
-      <div class="modal-content" role="dialog" aria-modal="true">
+    <div class="gdr-modal__overlay" aria-hidden="true">
+      <div class="gdr-modal__content" role="dialog" aria-modal="true">
 
-        <button class="close-modal-btn" aria-label="Close modal">
+        <button class="gdr-modal__close-btn" aria-label="Close modal">
           {% comment %} Using eager loading for icons too {% endcomment %}
-          <img src="{{ 'x.svg' | asset_url }}" class="close-icon" alt="" loading="eager" width="20" height="20">
+          <img src="{{ 'x.svg' | asset_url }}" class="gdr-modal__close-icon" alt="" loading="eager" width="20" height="20">
         </button>
 
-        <div class="modal-hero">
+        <div class="gdr-modal__hero">
           {% comment %} Logo: Pull alt from image object if text field is empty {% endcomment %}
           {%- liquid
             assign logo_alt = section.settings.modal_logo.alt | default: section.settings.modal_logo_alt
@@ -19,27 +19,27 @@
           -%}
 
           {% if section.settings.modal_logo %}
-            {{ section.settings.modal_logo | image_url: width: 500 | image_tag: class: 'modal-logo', alt: logo_alt, loading: 'eager' }}
+            {{ section.settings.modal_logo | image_url: width: 500 | image_tag: class: 'gdr-modal__logo', alt: logo_alt, loading: 'eager' }}
           {% else %}
-            <img src="{{ 'goodr_logo_white.svg' | asset_url }}" class="modal-logo" alt="Logo" loading="eager" width="200" height="auto">
+            <img src="{{ 'goodr_logo_white.svg' | asset_url }}" class="gdr-modal__logo" alt="Logo" loading="eager" width="200" height="auto">
           {% endif %}
 
           {% comment %} Desktop Background {% endcomment %}
           {% if section.settings.modal_image %}
-            {{ section.settings.modal_image | image_url: width: 1000 | image_tag: class: 'modal-img display-desktop', alt: main_alt, loading: 'eager', widths: '484, 748, 1000' }}
+            {{ section.settings.modal_image | image_url: width: 1000 | image_tag: class: 'gdr-modal__image gdr-modal__image--desktop', alt: main_alt, loading: 'eager', widths: '484, 748, 1000' }}
           {% else %}
-            <img src="{{ 'desktop_popup_img.png' | asset_url }}" class="modal-img display-desktop" alt="Desktop Background" loading="eager" width="100%" height="auto">
+            <img src="{{ 'desktop_popup_img.png' | asset_url }}" class="gdr-modal__image gdr-modal__image--desktop" alt="Desktop Background" loading="eager" width="100%" height="auto">
           {% endif %}
           
           {% comment %} Mobile Background {% endcomment %}
           {% if section.settings.modal_image_mobile %}
-            {{ section.settings.modal_image_mobile | image_url: width: 600 | image_tag: class: 'modal-img display-mobile', alt: main_alt, loading: 'eager', widths: '326, 600' }}
+            {{ section.settings.modal_image_mobile | image_url: width: 600 | image_tag: class: 'gdr-modal__image gdr-modal__image--mobile', alt: main_alt, loading: 'eager', widths: '326, 600' }}
           {% elsif section.settings.modal_image %}
-            {{ section.settings.modal_image | image_url: width: 600 | image_tag: class: 'modal-img display-mobile', alt: main_alt, loading: 'eager' }}
+            {{ section.settings.modal_image | image_url: width: 600 | image_tag: class: 'gdr-modal__image gdr-modal__image--mobile', alt: main_alt, loading: 'eager' }}
 					{% else %}
 						<img 
 							src="{{ 'mobile_popup_img.png' | asset_url }}" 
-							class="modal-img display-mobile" 
+							class="gdr-modal__image gdr-modal__image--mobile" 
 							alt="Mobile Background" 
 							loading="eager" 
 							width="326" 
@@ -50,20 +50,20 @@
 
         	{% comment %} Only show text if description or discount code exists {% endcomment %}
 					{%- liquid
-						assign discount_span = '<span class="discount-code">' | append: section.settings.discount_code | append: '</span>'
+						assign discount_span = '<span class="gdr-modal__discount-code">' | append: section.settings.discount_code | append: '</span>'
 						assign description_text = section.settings.modal_description | default: "USE CODE [code] FOR $5 OFF YOUR FIRST ORDER"
 						assign formatted_description = description_text | replace: '[code]', discount_span
 					-%}
 
 					{% if formatted_description != blank %}
-						<p class="modal-description">{{ formatted_description }}</p>
+						<p class="gdr-modal__description">{{ formatted_description }}</p>
 					{% endif %}
 
-        <div class="modal-btn-group">
-          <a class="confirm-modal-btn" href="{{ section.settings.confirm_button_link }}">
+        <div class="gdr-modal__button-group">
+          <a class="gdr-modal__button--confirm" href="{{ section.settings.confirm_button_link }}">
             {{ section.settings.confirm_button_text | default: 'SHOP NOW' }}
           </a>
-          <button class="decline-modal-btn" type="button">
+          <button class="gdr-modal__button--decline" type="button">
             {{ section.settings.decline_button_text | default: 'No Thanks' }}
           </button>
         </div>

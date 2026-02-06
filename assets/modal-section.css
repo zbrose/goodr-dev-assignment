@@ -1,5 +1,5 @@
 /* 1. Base Variables */
-.custom-modal-section {
+.gdr-modal {
   --modal-navy: #0c2340;
   --modal-pink: #e06287;
   --modal-yellow: #ede939;
@@ -8,27 +8,27 @@
   visibility: hidden;
 }
 
-.custom-modal-section.is-active {
+.gdr-modal--active {
   visibility: visible;
 }
 
 /* Force open in test mode */
-.custom-modal-section.test-mode-active {
+.gdr-modal--test-mode {
   visibility: visible;
 }
 
-.custom-modal-section.test-mode-active .modal-content {
+.gdr-modal--test-mode .gdr-modal__content {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-.custom-modal-section.test-mode-active .modal-overlay {
+.gdr-modal--test-mode .gdr-modal__overlay {
   background: rgba(0, 0, 0, 0.6);
   pointer-events: auto;
 }
 
 /* 2. Overlay & Animation Logic */
-.modal-overlay {
+.gdr-modal__overlay {
   display: flex;
   position: fixed;
   inset: 0;
@@ -40,16 +40,16 @@
   pointer-events: none;
 }
 
-.custom-modal-section.is-active .modal-overlay {
+.gdr-modal--active .gdr-modal__overlay {
   background: rgba(0, 0, 0, 0.6);
   pointer-events: auto;
 }
 
-.custom-modal-section.is-closing .modal-overlay {
+.gdr-modal--closing .gdr-modal__overlay {
   background: rgba(0, 0, 0, 0);
 }
 
-.modal-content {
+.gdr-modal__content {
   font-family: var(--goodr-font);
   position: relative;
   background: #ffffff;
@@ -58,11 +58,11 @@
   text-align: center;
   width: 100%;
   max-width: 484px;
-  max-height: 90vh;
+  max-height: 654px;
+  min-height: 400px;
   padding: 52px 48px;
   box-shadow: var(--goodr-shadow);
   box-sizing: border-box;
-  /* Your Animation */
   opacity: 0;
   transform: scale(0.7) translateY(-20px);
   transition:
@@ -70,23 +70,23 @@
     transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.custom-modal-section.is-active .modal-content {
+.gdr-modal--active .gdr-modal__content {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-.custom-modal-section.is-closing .modal-content {
+.gdr-modal--closing .gdr-modal__content {
   opacity: 0;
   transform: scale(0.9) translateY(20px);
 }
 
 /* 3. Hero & Images (The Swap) */
-.modal-hero {
+.gdr-modal__hero {
   position: relative;
   margin-bottom: 1rem;
 }
 
-.modal-logo {
+.gdr-modal__logo {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -95,35 +95,35 @@
   width: 200px;
 }
 
-.modal-img {
+.gdr-modal__image {
   width: 100%;
   height: auto;
   border-radius: 4px;
   display: block;
 }
 
-.display-mobile {
+.gdr-modal__image--mobile {
   display: none;
 }
-.display-desktop {
+.gdr-modal__image--desktop {
   display: block;
 }
 
 /* 4. Text Styles */
-.modal-description {
+.gdr-modal__description {
   font-weight: 700;
   font-size: 24px;
   color: var(--modal-navy);
   margin: 1rem 0 2rem 0;
 }
 
-.discount-code {
+.gdr-modal__discount-code {
   color: var(--modal-pink);
   font-weight: 700;
 }
 
 /* 5. Buttons & Close Icon */
-.close-modal-btn {
+.gdr-modal__close-btn {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -139,14 +139,13 @@
   justify-content: center;
 }
 
-.modal-btn-group {
+.gdr-modal__button-group {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1.5rem;
 }
 
-.confirm-modal-btn {
+.gdr-modal__button--confirm {
   padding: 12px 0;
   background-color: var(--modal-yellow);
   border: 2px solid var(--modal-navy);
@@ -163,11 +162,11 @@
     transform 0.3s ease;
 }
 
-.confirm-modal-btn:hover {
+.gdr-modal__button--confirm:hover {
   box-shadow: 0 0 0 var(--modal-navy);
 }
 
-.decline-modal-btn {
+.gdr-modal__button--decline {
   color: var(--modal-navy);
   background: transparent;
   border: none;
@@ -179,32 +178,43 @@
 
 /* 6. Mobile Overrides */
 @media screen and (max-width: 600px) {
-  .display-mobile {
+  .gdr-modal__image--mobile {
     display: block;
   }
-  .display-desktop {
+  .gdr-modal__image--desktop {
     display: none;
   }
 
-  .modal-content {
+  .gdr-modal__content {
     padding: 35px 37px;
     max-width: 326px;
+    max-height: 550px;
     --goodr-shadow: -2.75px 2.75px var(--modal-navy);
   }
 
-  .close-modal-btn {
+  .gdr-modal__hero {
+    height: 342px;
+    width: 252px;
+  }
+
+  .gdr-modal__close-btn {
     top: 10px;
     right: 10px;
     width: 16px;
     height: 16px;
   }
 
-  .modal-description,
-  .discount-code {
+  .gdr-modal__description,
+  .gdr-modal__discount-code {
     font-size: 18px;
+    margin: 0.5rem 0 1rem 0;
   }
-  .confirm-modal-btn,
-  .decline-modal-btn {
-    font-size: 16px;
+
+  .gdr-modal__button--confirm {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+  .gdr-modal__button--decline {
+    font-size: 14px;
   }
 }
