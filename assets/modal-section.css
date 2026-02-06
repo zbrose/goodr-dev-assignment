@@ -12,6 +12,21 @@
   visibility: visible;
 }
 
+/* Force open in test mode */
+.custom-modal-section.test-mode-active {
+  visibility: visible;
+}
+
+.custom-modal-section.test-mode-active .modal-content {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.custom-modal-section.test-mode-active .modal-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+}
+
 /* 2. Overlay & Animation Logic */
 .modal-overlay {
   display: flex;

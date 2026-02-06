@@ -78,38 +78,56 @@
   "name": "Modal Popup",
   "settings": [
     {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Open Modal"
+      "type": "header",
+      "content": "Images"
     },
     {
       "type": "image_picker",
       "id": "modal_logo",
-      "label": "Modal Logo"
+      "label": "Logo"
     },
-		{
-			"type": "image_picker",
-			"id": "modal_image_mobile",
-			"label": "Mobile Image (Optional)"
-		},
-		{
-			"type": "text",
-			"id": "modal_logo_alt",
-			"label": "Modal Logo Alt Text",
-			"default": "Modal Logo"
-		}, 
-		{
-			"type": "text",
-			"id": "modal_image_alt",
-			"label": "Modal Image Alt Text",
-			"default": "Modal Image"
-		}, 
+    {
+      "type": "text",
+      "id": "modal_logo_alt",
+      "label": "Logo Alt Text",
+      "default": "Modal Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "modal_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "modal_image_mobile",
+      "label": "Mobile Image (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "modal_image_alt",
+      "label": "Image Alt Text",
+      "default": "Modal Image"
+    },
+    {
+      "type": "header",
+      "content": "Text & Copy"
+    },
     {
       "type": "text",
       "id": "modal_description",
-      "label": "Modal Description",
-			"default": "USE CODE [code] FOR $5 OFF YOUR FIRST ORDER"
+      "label": "Description",
+      "default": "USE CODE [code] FOR $5 OFF YOUR FIRST ORDER",
+      "info": "Use [code] as a placeholder for the discount code"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount Code",
+      "default": "GOODR5"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
     },
     {
       "type": "text",
@@ -118,21 +136,20 @@
       "default": "SHOP ALL STYLES"
     },
     {
+      "type": "url",
+      "id": "confirm_button_link",
+      "label": "Confirm Button Link",
+      "default": "/collections/all"
+    },
+    {
       "type": "text",
       "id": "decline_button_text",
       "label": "Decline Button Text",
       "default": "NAH, I HATE DEALS"
     },
     {
-      "type": "url",
-      "id": "confirm_button_link",
-      "label": "Confirm Button Link",
-			"default": "/collections/all"
-    },
-    {
-      "type": "image_picker",
-      "id": "modal_image",
-      "label": "Modal Image"
+      "type": "header",
+      "content": "Advanced Settings"
     },
     {
       "type": "range",
@@ -141,26 +158,20 @@
       "max": 20,
       "step": 1,
       "unit": "sec",
-      "label": "Delay before showing",
+      "label": "Delay Before Showing",
       "default": 2
     },
     {
-      "type": "text",
-      "id": "discount_code",
-			"default": "GOODR5",
-			"label": "Discount Code"
-    },
-		{
-			"type": "checkbox",
-			"id": "test_mode",
-			"label": "Force Open (Test Mode)",
-			"default": false,
-			"info": "Check this to keep the modal open while you style it in the editor."
-		}
+      "type": "checkbox",
+      "id": "test_mode",
+      "label": "Force Open (Test Mode)",
+      "default": false,
+      "info": "Check this to keep the modal open while you style it in the editor"
+    }
   ],
   "presets": [
     {
-      "name": "Modal Section"
+      "name": "Modal Popup"
     }
   ]
 }
