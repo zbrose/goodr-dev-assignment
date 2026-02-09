@@ -121,7 +121,7 @@ Refer to the schema settings in [sections/goodr-popup.liquid](sections/goodr-pop
 ## Future Improvements
 
 - **Animation presets**: Expand animation library with fade, slide, scale variants
-- **TypeScript migration**: Add type safety to JavaScript code
+- **TypeScript**: Add type safety to JavaScript code
 - **Theme customization**: Support Shopify Theme Settings for font, color customization
 - **Internationalization (i18n)**: Multi-language label support
 - **Analytics integration**: Built-in event tracking for popup interactions
