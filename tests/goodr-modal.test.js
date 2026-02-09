@@ -30,20 +30,17 @@ describe("GoodrPopup Focus Trap", () => {
     const popup = new GoodrPopup(container);
     popup.init();
     popup.show();
-    // Run timers so the show()'s setTimeout for focus finishes
+
     vi.runOnlyPendingTimers();
 
     const firstElement = container.querySelector(".gdr-popup__close-btn");
     const lastElement = container.querySelector("#first-input");
 
-    // 1. Manually move focus to the last element
     lastElement.focus();
     expect(document.activeElement).toBe(lastElement);
 
-    // 2. Simulate Tab
     await user.tab();
 
-    // 3. Expect focus to wrap to the first element
     expect(document.activeElement).toBe(firstElement);
   });
 
@@ -56,13 +53,10 @@ describe("GoodrPopup Focus Trap", () => {
     const firstElement = container.querySelector(".gdr-popup__close-btn");
     const lastElement = container.querySelector("#first-input");
 
-    // 1. Start at the first element
     firstElement.focus();
 
-    // 2. Simulate Shift+Tab
     await user.tab({ shift: true });
 
-    // 3. Expect focus to wrap to the last element
     expect(document.activeElement).toBe(lastElement);
   });
 });
