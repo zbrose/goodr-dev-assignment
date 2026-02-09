@@ -1,6 +1,6 @@
 # The goodr popup
 
-Welcome to the goodr popup (official)! This is a reuseable popup component developed by the goodr team to take hassle out of developing your own popup/pop-up from scratch.
+Welcome to the goodr popup (official)! This is a reuseable popup component developed by the goodr team to take hassle out of developing your own popup from scratch.
 
 <img src="./assets/desktop.png" width="200" /> <img src="./assets/mobile.png" width="165" />
 
